@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Node Auth</title>
+  <link href="../public/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <form action="/logout" method="post">
+    <button class="log">Logout</button>
+  </form>
+  <div class="editPost">
+    <h1>Edit Comments Page</h1>
+    <form action="/updateComment" method='POST'>
+
+      <textarea name="postId" style="display: none;"><%-postId%></textarea>
+      <b> Comments :-<textarea rows="4" cols="40" name="comment"><%-comment%></textarea>
+        <br>
+        <button class="see-post">Update</button>
+    </form>
+  </div>
+</body>
+
+</html>

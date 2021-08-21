@@ -1,0 +1,130 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+
+    <title>Comments </title>cler
+    <style>
+        button {
+            padding: 10px 17px;
+            margin-top: 1rem;
+            font-size: 1rem;
+            background: #eee;
+            border: 1px solid #333;
+            cursor: pointer;
+        }
+
+        .see-post {
+            padding: 10px 17px;
+            margin-top: 1rem;
+            font-size: 1rem;
+            background: #eee;
+            border: 1px solid #333;
+            cursor: pointer;
+        }
+
+        .addpost {
+            justify-content: center;
+            margin-top: 200px;
+        } 
+          body {
+            padding: 50px;
+            font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+            text-align: center !important;
+            background-color: lightblue !important;
+            margin-right: 200px;
+        }
+        table,
+        td,
+        th {
+            border: 1px solid black;
+        }
+
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .form-control {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .log {
+      background-color: blue;
+      color: white;
+      margin-left: 1600px;
+    } 
+    </style>
+</head>
+
+<body>
+    <form id="form1" method='get'>
+        <div class="addpost">
+            <b>Type Your Comments :-</b>
+            <br>
+            <br>
+            <textarea rows="3" cols="40" name="comment" id="comment"></textarea>
+            <br>
+            <button type="Submit" id="add" class="btn btn-success">Add Comments</button>
+            <a href="/allUserPost" class="btn btn-success">Go Back</a><br>
+        </div>
+    </form>
+    <br>
+    <h2 id="msg"></h2>
+    <table>
+        <tr>
+            <th>Commnent</th>
+            <th>Post Id</th>
+            <th>Commnent By User</th>
+        </tr>
+        <tr>
+            <td>
+                <p id="comments"></p>
+            </td>
+            <td>
+                <p id="post"></p>
+            </td>
+            <td>
+                <p1 id="user"></p1>
+            </td>
+
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#form1").submit(function (event) {
+                event.preventDefault();
+                const comment = $('#comment').val();
+                     $.ajax({
+                    url: '/addYourComments',
+                    data: {
+                        comment: comment,
+                        user: '<%-user%>',
+                        postId: '<%-postId%>'
+                    },
+                    type: 'get',
+                    contentType: "application/json",
+                    success: function (response) {
+                        $('#comments').html(response.comments)
+                        $('#post').html(response.post)
+                        $('#user').html(response.user)
+                        $('#msg').html('Your Comments Added Sucessfully.....! ')
+                    },
+                    error: function () {
+                    }
+                })
+            });
+        });
+    </script>
+</body>
+
+</html> -->

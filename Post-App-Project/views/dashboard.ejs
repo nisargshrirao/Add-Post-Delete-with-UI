@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Home Page</title>
+  <style>
+     body{
+        background-color: rgb(121, 150, 160) !important;
+      }
+    button {
+      padding: 10px 17px;
+      margin-top: 1rem;
+      font-size: 1rem;
+      background: #eee;
+      border: 1px solid #333;
+      cursor: pointer;
+    }
+
+    .see-post {
+      padding: 10px 17px;
+      margin-top: 1rem;
+      font-size: 1rem;
+      background: #eee;
+      border: 1px solid #333;
+      cursor: pointer;
+      background-color: chartreuse;
+      color: black;
+      font-size: 20px;
+    }
+    
+    .change {
+      padding: 10px 17px;
+      margin-top: 1rem;
+      font-size: 1rem;
+      background: #eee;
+      border: 1px solid #333;
+      cursor: pointer;
+      background-color: ghostwhite;
+      color: black;
+      font-size: 20px;
+    }
+
+    .head {
+      color: black;
+      background-color: hotpink;
+      margin-top: 50px;
+      max-width: 50%;
+
+    }
+
+    .dashboard1 {
+     margin-top: 200px;
+      margin-left: 600px;    
+    }
+    .frm {
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 28px;
+      height: 60px;
+      color: white;
+    }
+    .log {
+      background-color: blue;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card__actions">
+    <form action="/logout" method="post" class="frm">
+      <button class='log'>Logout</button>
+  </div>
+  <label style="color: black; font-size: 25px;">Username :-</label><label style="color: blue; font-size: 25px;">
+    <%-req.user.username %>
+</label> <br> <br><br>
+  
+  </label> <br> <br><br>
+  <a class="change" href="/changePassword">ChangePassword</a>
+
+  <div class="dashboard1">
+    <a class="see-post" href="/addpost">Add New Post</a>
+    <a class="see-post" href="/allUserPost">All-Post</a>
+    <a class="see-post" href="/getallPost">Your-Post</a>
+    <a class="see-post" href="/getPostById">Find Post Using Id</a>
+  </div>
+</body>
+</html>

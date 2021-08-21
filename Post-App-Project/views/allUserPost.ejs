@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User All Post</title>
+  <link href="../public/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <h2>UserName :-<label id='user'>
+      <%= usersession %>
+    </label></h2>
+  <form action="/logout" method="post">
+    <button class="log">Logout</button>
+  </form>
+  <br> <br>
+  <table class="table table-inverse">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th style="width: 140px;">Comments Section</th>
+        <th style="width: 140px;">User Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if(err) { %>
+        <h2 style="color: yellow;">
+          <%= err %>
+            <%= totalPost %>
+        </h2>
+        <% } %>
+          <% for (let post of posts) { %>
+            <tr>
+              <td>
+                <%- post.user %>
+              </td>
+              <td>
+                <%- post.tittle %>
+              </td>
+              <td>
+                <%- post.description %>
+              </td>
+              <td>
+                <button class="see-post"" onclick=" giveComments('<%-post.user%>','<%-post._id %>')">Give-Comment</button>
+
+              </td>
+              <td>
+                <button class="see-post" id="clr" onclick="clickHandler('<%- post._id %>')">See All Comment</button>
+              </td>
+            </tr>
+            <% } %>
+    </tbody>
+  </table>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+  </script>
+  <script type="text/javascript">
+    function clickHandler(postId) {
+      $("#tableshowcomments").show();
+      $("#comments").empty();
+      $("#username").empty();
+      $("#form1").hide();
+
+      $.ajax({
+        url: '/seeAllComments?postId=' + postId,
+        type: 'GET',
+        contentType: "application/json",
+        success: function (response) {
+          console.log(response);
+          $.each(response, function (index, value) {
+            var editHTML = `<p>${value.comments}</p>`;
+            $(editHTML).appendTo('#comments');
+
+            var editHTML1 = `<p>${value.user}</p>`;
+            $(editHTML1).appendTo('#username');
+
+          });
+        },
+        error: function () {
+        }
+      })
+    }
+  </script>
+  <br>
+  <br>
+  <table id="tableshowcomments" style="display: none;">
+    <tr>
+      <th>Comments</th>
+      <th>Comments By User</th>
+    </tr>
+    <tr>
+      <td id="comments">
+      </td>
+      <td id="username">
+      </td>
+    </tr>
+  </table>
+</body>
+
+<form id="form1" style="display: none;">
+  <div class="addpost">
+    <b>Type Your Comments :-</b>
+    <br>
+    <br>
+    <textarea rows="3" cols="40" name="comment" id="comment"></textarea>
+    <br>
+    <button type="Submit" id="add" class="btn btn-success">Add Comments</button>
+    <br>
+  </div>
+</form>
+<br>
+<h2 id="msg"></h2>
+<script type="text/javascript">
+  function giveComments(user, postId) { 
+    $('#form1')[0].reset();
+     $('#comment').attr('data-user', user);
+    $('#comment').attr('data-postId', postId);
+
+    $("#form1").show();
+    $("#tableshowcomments").hide();
+  }
+
+  $("#form1").submit(function (event) {
+    event.preventDefault();
+    let user = $('#comment').attr('data-user');
+    let postId = $('#comment').attr('data-postId');
+    const comment = $('#comment').val();
+
+    let data = {
+      comment: comment,
+      user: user,
+      postId: postId
+    };
+
+    console.log("DATA :::::::::::: ", data);
+    $.ajax({
+      url: '/addYourComments',
+      type: 'post',
+      data: data,
+      success: function (response) {
+        $('#msg').html('Your Comments Added Sucessfully.....! ')
+      },
+      error: function () {
+      }
+    })
+    $('#form1')[0].reset();
+   });
+</script>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comments Information</title>
+  <link href="../public/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <h1 class="head">All Commmets</h1>
+  </label></h2>
+  <br>
+  <br>
+  <table class="table table-inverse">
+    <thead>
+      <tr>
+        <th>Comments</th>
+        <th>Comments By</th>
+        <th>Delete Comment</th>
+        <th>Edit Comment</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let comm of comments) { %>
+        <tr>
+          <td>
+            <%- comm.comments %>
+          </td>
+          <td>
+            <%- comm.user %>
+          </td>
+          <td>
+            <a class="see-post" href="/deleteComments?commentsId=<%-comm._id%>&postId=<%-comm.post%>">Delete
+              Comments</a>
+          </td>        
+          <td>
+            <a class="see-post" href="/editComments?commentsId=<%-comm._id%>">Edit
+              Comments</a>
+          </td>              
+        </tr>        
+        <% } %>
+    </tbody>
+  </table>
+</body>
+
+</html>

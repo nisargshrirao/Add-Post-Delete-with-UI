@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Info</title>
+      <style type="text/css">
+        body {
+            padding: 50px;
+            font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+            text-align: center !important;
+            background-color: lightblue !important;
+            margin-right: 200px;
+        }
+        table,
+        td,
+        th {
+            border: 1px solid black;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        .form-control {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .log {
+            background-color: blue;
+            color: white;
+            margin-left: 1600px;
+        }
+
+        #iserror {
+            color: red;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"> </script>
+</head>
+<body>
+    <form action="/logout" method="post">
+        <button class="log">Logout</button>
+    </form>
+    <br> <br>
+    <h2 id="iserror"></h2>
+    <form id="form1" method="get">
+        <div>
+            <h1>Search Post ID </h1><input class="form-control" type="text" name="postid" id="postid" required>
+            <br />
+            <button type="Submit" id="add" class="btn btn-success">Submit</button>
+            <br>
+            <br>
+        </div>
+    </form>
+    <br>
+     <button id="findComments" class="btn btn-success" style="display:none;"  onclick="findAllCommnets()">FindComments</button>   
+    <table>
+        <tr>
+            <th>User Name</th>
+            <th>Tittle</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>
+                <p id="user"></p>
+            </td>
+            <td>
+                <p id="tittle"></p>
+            </td>
+            <td>
+                <p1 id="desc"></p1>
+            </td>
+        </tr>
+    </table>
+    <br><br>
+    <h3 id="iserror1" style="color: red;"></h3>
+    <table id="find" style="display: none;">
+        <tr>
+            <th>Comments</th>
+            <th>Comments By User</th>           
+        </tr>
+        <tr>
+            <td>
+                <p id="comments"></p>
+            </td>
+            <td>
+                <p id="username"></p>
+            </td>      
+        </tr>
+    </table>
+     
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#form1").submit(function (event) {
+                $("#findComments").show();
+                event.preventDefault();
+                const postId = $('#postid').val();
+                          $.ajax({
+                    url: '/postById?postId=' + postId,
+                    type: 'GET',
+                    data: $('#form1').serialize(),
+                    contentType: "application/json",
+                    success: function (response) {
+                        if (response.length > 0) {
+                            $('#user').html(response[0].user)
+                            $('#tittle').html(response[0].tittle)
+                            $('#desc').html(response[0].description)
+                        } else {
+                            $('#iserror').html('No Recoders Found')
+                        }
+                    },
+                    error: function (err) {
+                        $('#iserror').html('PostId Must Be In Formated..')
+                    }
+                })
+            });
+        });
+        
+         function findAllCommnets() {
+            const postId = $('#postid').val();
+            $("#comments").empty();
+            $("#username").empty();
+            $("#find").show();
+            $.ajax({
+                url: '/seeAllComments?postId=' + postId,
+                type: 'GET',
+                contentType: "application/json",
+                success: function (response) {
+                   if(response.length >0){
+                    $.each(response, function (index, value) {
+                        var editHTML = `<p>${value.comments}</p>`;
+                        $(editHTML).appendTo('#comments');
+
+                        var editHTML1 = `<p>${value.user}</p>`;
+                        $(editHTML1).appendTo('#username');
+                    });   
+                }else{
+                    $('#iserror1').show();
+                    $('#iserror1').html('No Comments Found')
+                }},
+                error: function () {
+                }
+            })          
+        }
+    </script>
+</body>
+</html>

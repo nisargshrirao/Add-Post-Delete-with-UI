@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Single User Post</title>
+  <link href="../public/css/style.css" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+  </script>
+</head>
+<body>
+  <form action="/logout" method="post">
+    <button class="log">Logout</button>
+  </form>
+
+  <br>
+  <a style="margin-left: 10px;" class="see-post" href="/addpost">Add Next Post</a>
+  <h1 style="margin-left: 850px;">Your Post </h1>
+  <br>
+  <table class="table table-inverse">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th class="alian">Edit</th>
+        <th class="alian">Delete</th>
+        <th class="comm">See All Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if(err) { %>
+        <h2 style="color: yellow;">
+          <%= err %>
+            <%= totalPost %>
+        </h2>
+        <% } %>
+          <% for (let posts of prods) { %>
+            <tr>
+              <td>
+                <%- posts.tittle %>
+              </td>
+              <td>
+                <%- posts.description %>
+              </td>
+              <td>
+                <a class="see-post" href="/editPostUser?postId=<%=posts._id%>">Edit Post</a>
+              </td>
+              <td>
+                <a class="see-post" href="/deletePostUser?postId=<%-posts._id%>&user=<%- posts.user %>">Delete Post</a>
+              </td>
+              <td style="width: 120px;">
+                <a class="see-post" href="/findAllComment?postId=<%=posts._id%>">Find Comments</a>
+
+              </td>
+            </tr>
+            <% } %>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+</body>
+
+</html>

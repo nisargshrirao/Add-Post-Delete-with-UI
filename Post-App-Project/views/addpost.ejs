@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add | New Post</title>
+  <link href="../public/css/style.css" rel="stylesheet" type="text/css">
+
+  <style>
+    .error-show{
+       color: red;
+       text-align: center;
+       max-width: 377px;     
+      }
+  </style>
+</head>
+
+<body>
+  <form action="/logout" method="post" >
+    <button class="log">Logout</button>   
+  </form>
+  <% if (urlController=='NewPost' ) { %>
+    <div class="newaddpost">
+      <h1>Add Your New Post</h1>
+      <form action="/addPost" method='POST' >
+        <b> Tittle :-</b>
+        <br>
+        <textarea rows="4" cols="40" name="tittle" value="<%= formData.tittle %>" required></textarea>
+        <% if (errors.tittle) { %>
+          <div class="error-show">
+            <%= errors.tittle[0] %>
+          </div>
+        <% } %>
+        <br>
+        <b>Description :-</b>
+        <br>
+        <textarea rows="5" cols="60" name="description" value="<%= formData.description %>" required></textarea>
+        <% if (errors.description) { %>
+          <div class="error-show">
+            <%= errors.description[0] %>
+          </div>
+        <% } %>
+        <br>
+        <button>Add Post</button>
+      </form>
+    </div>
+    <% }%>
+      <% if (urlController=='editByAdmin' ) {%>
+        <div class="addpost">
+          <h1>Update User Data Admin Page</h1>
+          <form action="/updatePostByAdmin" method='POST'>
+            <textarea name="postId" style="display: none;"><%-postId%></textarea>
+            <b> Tittle :-</b>
+            <br>
+            <textarea rows="4" cols="40" name="tittle"> <%- tittle %></textarea>
+            <br>
+            <b>Description :-</b>
+            <br>
+            <textarea rows="5" cols="60" name="description"><%- description %></textarea>
+
+            <br>
+            <button>Update Post By Admin</button>
+          </form>
+        </div>
+        <%} %>
+          <% if (urlController=='editByUser' ) {%>
+            <div class="addpost">
+              <h1>Update Your Data User Page</h1>
+              <form action="/updatePostByUser" method='POST'>
+                <textarea name="postId" style="display: none;"><%-postId%></textarea>
+                <b> Tittle :-</b>
+                <br>
+                <textarea rows="4" cols="40" name="tittle"> <%- tittle %></textarea>
+                <br>
+                <b>Description :-</b>
+                <br>
+                <textarea rows="5" cols="60" name="description"><%- description %></textarea>
+
+                <br>
+                <button>Update Your Post User</button>
+              </form>
+            </div>
+            <%}%>
+            <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous">
+          </script>
+          <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous">
+          </script>
+          <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous">
+          </script>
+</body>
+
+</html>

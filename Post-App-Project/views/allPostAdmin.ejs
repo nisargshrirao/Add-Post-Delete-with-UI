@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin | AllPost</title>
+    <style>
+        body{
+        background-color: rgb(121, 150, 160) !important;
+      }
+        table,
+  td,
+  th {
+    border: 4px solid black;
+    padding: 10px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th {
+    height: 40px;
+    background-color: darkturquoise;
+  }
+  #user {
+    color: darkcyan;
+    background-color: white;
+    font-size: 30px;
+  }
+
+  .log {
+    background-color: deepskyblue;
+    margin-left: 1600px;
+    padding: 15px;
+    margin-top: 0;
+  }
+
+  .head {
+    margin-top: 50px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .see-post {
+    padding: 10px 17px;
+    margin-top: 1rem;
+    font-size: 1rem;
+    background: #eee;
+    border: 1px solid #333;
+    cursor: pointer;
+       }
+       .frm {
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 28px;
+      height: 60px;
+      color: white;
+    }
+    .log {
+      background-color: blue;
+      color: white;
+      margin-left: 1600px;
+    }
+
+    </style>
+</head>
+<body>
+  <form action="/logout" method="post">
+    <button class="log">Logout</button>   
+  </form>
+    <h1 class="head">Admin Panel All User Post</h1>
+     </label></h2>
+    <table class="table table-inverse">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Title</th>
+                <th>Description</th>
+               <th>Edit</th>
+               <th>Delete</th>
+               <th style="width: 190px;">SeeComments</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let posts of users) { %>
+                <tr>
+                    <td>
+                        <%- posts.user %>
+                    </td>
+                    <td>
+                        <%- posts.tittle %>
+                    </td>
+                    <td>
+                        <%- posts.description %>
+                    </td>
+                    <td>
+                       <a class="see-post" href="/editPost?postId=<%=posts._id%>">Edit</a>
+                    </td>
+                    <td>
+                        <a class="see-post" href="/deletePost?postId=<%-posts._id%>">Delete</a>
+                    </td>
+                      <td>
+                    <a class="see-post" href="/seeAllCommentsAdmin?postId=<%- posts._id %>">See All Comment</a>
+                  </td>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+      function clickHandler(postId) {
+        $("#tableshowcomments").show();
+        $("#comments").empty();
+        $("#username").empty();
+        $("#form1").hide();
+  
+        $.ajax({
+          url: '/seeAllComments?postId=' + postId,
+          type: 'GET',
+          contentType: "application/json",
+          success: function (response) {
+
+            $.each(response, function (index, value) {
+
+              var editHTML = `<p>${value.comments}</p>`;
+              $(editHTML).appendTo('#comments');
+  
+              var editHTML1 = `<p>${value.user}</p>`;
+              $(editHTML1).appendTo('#username');
+
+              var editHTML2 = `<p>${value._id}</p>`;
+              $(editHTML2).appendTo('#deletecom');
+  
+            });
+          },
+          error: function () {
+          }
+        })
+      }
+    </script>
+</body>
+
+</html>
